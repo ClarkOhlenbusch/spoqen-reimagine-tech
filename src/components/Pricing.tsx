@@ -2,19 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { InteractiveBackground } from "@/components/InteractiveBackground";
-
 export const Pricing = () => {
-  const features = [
-    "Call summaries in email & CRM",
-    "Unlimited receptionist minutes", 
-    "Custom call greeting & script",
-    "Lead qualification questions",
-    "Real-time analytics dashboard",
-    "Priority customer support"
-  ];
-
-  return (
-    <InteractiveBackground variant="pricing" className="py-20 bg-gradient-to-b from-card/30 to-background">
+  const features = ["Call summaries in email & CRM", "Unlimited receptionist minutes", "Custom call greeting & script", "Lead qualification questions", "Real-time analytics dashboard", "Priority customer support"];
+  return <InteractiveBackground variant="pricing" className="py-20 bg-gradient-to-b from-card/30 to-background">
       <section id="pricing">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16 animate-fade-in">
@@ -27,7 +17,7 @@ export const Pricing = () => {
           </div>
 
           <div className="max-w-md mx-auto animate-slide-up">
-            <Card className="p-8 bg-card/20 backdrop-blur-glass border-white/10 hover:bg-card/30 transition-all duration-300 hover:scale-105 hover:shadow-glow-primary/20 relative overflow-hidden">
+            <Card className="p-8 bg-card/20 backdrop-blur-glass border-white/10 hover:bg-card/30 transition-all duration-300 hover:scale-105 hover:shadow-glow-primary/20 relative overflow-hidden py-[32px]">
               {/* Popular Badge */}
               <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <div className="bg-gradient-primary px-4 py-1 rounded-full text-sm font-semibold text-white shadow-glow-primary">
@@ -45,14 +35,12 @@ export const Pricing = () => {
               </div>
 
               <div className="space-y-4 mb-8">
-                {features.map((feature, index) => (
-                  <div key={index} className="flex items-center space-x-3">
+                {features.map((feature, index) => <div key={index} className="flex items-center space-x-3">
                     <div className="flex-shrink-0 w-5 h-5 bg-gradient-primary rounded-full flex items-center justify-center">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                     <span className="text-foreground">{feature}</span>
-                  </div>
-                ))}
+                  </div>)}
               </div>
 
               <Button variant="neon" size="lg" className="w-full">
@@ -66,7 +54,9 @@ export const Pricing = () => {
           </div>
 
           {/* Enterprise CTA */}
-          <div className="text-center mt-12 animate-fade-in" style={{animationDelay: '0.3s'}}>
+          <div className="text-center mt-12 animate-fade-in" style={{
+          animationDelay: '0.3s'
+        }}>
             <Card className="p-6 bg-card/10 backdrop-blur-glass border border-white/5 max-w-2xl mx-auto">
               <h3 className="text-xl font-semibold mb-2">Need an Enterprise Solution?</h3>
               <p className="text-muted-foreground mb-4">
@@ -79,6 +69,5 @@ export const Pricing = () => {
           </div>
         </div>
       </section>
-    </InteractiveBackground>
-  );
+    </InteractiveBackground>;
 };
