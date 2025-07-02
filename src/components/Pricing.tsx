@@ -19,7 +19,7 @@ export const Pricing = () => {
           <div className="max-w-md mx-auto animate-slide-up">
             <Card className="p-8 bg-card/20 backdrop-blur-glass border-white/10 hover:bg-card/30 transition-all duration-300 hover:scale-105 hover:shadow-glow-primary/20 relative overflow-hidden py-[32px]">
               {/* Popular Badge */}
-              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                 <div className="bg-gradient-primary px-4 py-1 rounded-full text-sm font-semibold text-white shadow-glow-primary">
                   Most Popular
                 </div>
