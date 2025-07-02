@@ -99,7 +99,7 @@ export const Hero = () => {
             
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
               Never Miss a
-              <span className="bg-gradient-primary bg-clip-text text-transparent block">
+              <span className="bg-gradient-primary bg-clip-text text-transparent block leading-[1.2] py-1">
                 Lead Again
               </span>
             </h1>
