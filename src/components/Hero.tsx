@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
-import { DashboardPreview } from "@/components/DashboardPreview";
+import { RealDashboardPreview } from "@/components/RealDashboardPreview";
 
 export const Hero = () => {
   return (
@@ -61,9 +61,9 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - Interactive Dashboard Preview */}
+          {/* Right Content - Real Dashboard Preview */}
           <div className="relative animate-slide-up" style={{animationDelay: '0.3s'}}>
-            <DashboardPreview />
+            <RealDashboardPreview />
           </div>
         </div>
       </div>
