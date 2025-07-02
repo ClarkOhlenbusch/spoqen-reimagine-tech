@@ -18,21 +18,21 @@
     --popover: 222 24% 8%;
     --popover-foreground: 210 40% 98%;
 
-    /* Electric Blue Primary */
-    --primary: 195 100% 50%;
-    --primary-foreground: 222 24% 4%;
+    /* Brand Magenta Primary */
+    --primary: 315 100% 50%;
+    --primary-foreground: 210 40% 98%;
 
-    /* Neon Purple Secondary */
-    --secondary: 280 100% 60%;
-    --secondary-foreground: 210 40% 98%;
+    /* Brand Cyan Secondary */
+    --secondary: 180 100% 50%;
+    --secondary-foreground: 222 24% 4%;
 
     /* Muted Dark */
     --muted: 222 24% 12%;
     --muted-foreground: 215 20% 65%;
 
-    /* Neon Cyan Accent */
-    --accent: 180 100% 50%;
-    --accent-foreground: 222 24% 4%;
+    /* Brand Purple Accent */
+    --accent: 270 100% 60%;
+    --accent-foreground: 210 40% 98%;
 
     /* Red Destructive */
     --destructive: 0 85% 60%;
@@ -41,21 +41,21 @@
     /* Subtle borders */
     --border: 222 24% 16%;
     --input: 222 24% 16%;
-    --ring: 195 100% 50%;
+    --ring: 315 100% 50%;
 
     /* Rounded corners */
     --radius: 1rem;
 
-    /* Custom Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(195 100% 50%), hsl(280 100% 60%));
-    --gradient-secondary: linear-gradient(135deg, hsl(280 100% 60%), hsl(180 100% 50%));
+    /* Brand Gradients - Matching Logo */
+    --gradient-primary: linear-gradient(135deg, hsl(315 100% 50%), hsl(270 100% 60%), hsl(180 100% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(180 100% 50%), hsl(220 100% 60%));
     --gradient-dark: linear-gradient(135deg, hsl(222 24% 4%), hsl(222 24% 8%));
-    --gradient-glow: linear-gradient(135deg, hsl(195 100% 50% / 0.2), hsl(280 100% 60% / 0.2));
+    --gradient-glow: linear-gradient(135deg, hsl(315 100% 50% / 0.2), hsl(180 100% 50% / 0.2));
 
-    /* Neon Glows */
-    --glow-primary: 0 0 20px hsl(195 100% 50% / 0.5);
-    --glow-secondary: 0 0 20px hsl(280 100% 60% / 0.5);
-    --glow-accent: 0 0 20px hsl(180 100% 50% / 0.5);
+    /* Brand Neon Glows */
+    --glow-primary: 0 0 20px hsl(315 100% 50% / 0.5);
+    --glow-secondary: 0 0 20px hsl(180 100% 50% / 0.5);
+    --glow-accent: 0 0 20px hsl(270 100% 60% / 0.5);
 
     /* Glass Effect */
     --glass-bg: hsl(222 24% 6% / 0.8);
