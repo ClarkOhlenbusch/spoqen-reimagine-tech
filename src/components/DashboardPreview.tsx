@@ -1,157 +1,259 @@
-import { Card } from "@/components/ui/card";
-import { BarChart, Phone, Users, DollarSign, TrendingUp } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Phone, Users, BarChart3, Target, TrendingUp, Clock, CheckCircle } from "lucide-react";
+
+interface PreviewSection {
+  id: string;
+  title: string;
+  icon: React.ComponentType<any>;
+  content: React.ReactNode;
+}
 
 export const DashboardPreview = () => {
-  const stats = [
-    { label: "Total Calls", value: "1,247", change: "+12%", icon: Phone, color: "primary" },
-    { label: "Leads Qualified", value: "892", change: "+8%", icon: Users, color: "accent" },
-    { label: "Conversion Rate", value: "71.5%", change: "+5%", icon: TrendingUp, color: "secondary" },
-    { label: "Revenue Impact", value: "$52,180", change: "+23%", icon: DollarSign, color: "primary" }
-  ];
+  const [currentSection, setCurrentSection] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  const recentCalls = [
-    { number: "+1 (555) 123-4567", time: "2 mins ago", duration: "3:42", status: "Qualified", cost: "$45" },
-    { number: "+1 (555) 987-6543", time: "5 mins ago", duration: "2:18", status: "Qualified", cost: "$32" },
-    { number: "+1 (555) 456-7890", time: "12 mins ago", duration: "4:56", status: "Not Qualified", cost: "$0" },
-    { number: "+1 (555) 321-0987", time: "18 mins ago", duration: "6:23", status: "Qualified", cost: "$78" }
-  ];
-
-  return (
-    <section id="dashboard" className="py-20 bg-gradient-dark relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute top-20 left-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-      <div className="absolute bottom-20 right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-            Real-Time <span className="bg-gradient-secondary bg-clip-text text-transparent">Analytics</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Monitor your AI receptionist performance and track your ROI with our comprehensive dashboard.
-          </p>
+  const sections: PreviewSection[] = [
+    {
+      id: "overview",
+      title: "Dashboard Overview",
+      icon: BarChart3,
+      content: (
+        <div className="space-y-4 animate-fade-in">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-primary/10 p-3 rounded-lg border border-primary/20">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Active Calls</span>
+                <Phone className="h-4 w-4 text-primary" />
+              </div>
+              <div className="text-lg font-bold text-primary mt-1">12</div>
+              <div className="text-xs text-green-400">+3 from yesterday</div>
+            </div>
+            <div className="bg-secondary/10 p-3 rounded-lg border border-secondary/20">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Qualified</span>
+                <Target className="h-4 w-4 text-secondary" />
+              </div>
+              <div className="text-lg font-bold text-secondary mt-1">89</div>
+              <div className="text-xs text-green-400">+15% this week</div>
+            </div>
+          </div>
+          <div className="bg-accent/10 p-3 rounded-lg border border-accent/20">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs text-muted-foreground">Revenue Impact</span>
+              <TrendingUp className="h-4 w-4 text-accent" />
+            </div>
+            <div className="text-xl font-bold text-accent">$24,680</div>
+            <div className="w-full bg-muted/30 rounded-full h-1 mt-2">
+              <div className="bg-gradient-primary h-1 rounded-full w-3/4 animate-pulse"></div>
+            </div>
+          </div>
         </div>
-
-        {/* Stats Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {stats.map((stat, index) => (
-            <Card 
-              key={index} 
-              className="p-6 bg-card/20 backdrop-blur-glass border-white/10 hover:bg-card/30 transition-all duration-300 group hover:scale-105 animate-slide-up"
-              style={{animationDelay: `${index * 0.1}s`}}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`p-2 rounded-lg bg-gradient-to-r from-${stat.color}/20 to-${stat.color}/10`}>
-                  <stat.icon className={`w-5 h-5 text-${stat.color}`} />
+      )
+    },
+    {
+      id: "calls",
+      title: "Active Calls",
+      icon: Phone,
+      content: (
+        <div className="space-y-3 animate-slide-in-right">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground uppercase tracking-wide">Live Monitoring</span>
+            <div className="flex items-center space-x-1">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-xs text-green-500">Live</span>
+            </div>
+          </div>
+          
+          {[
+            { name: "Sarah M.", duration: "3:24", status: "qualifying" },
+            { name: "John D.", duration: "1:45", status: "connected" },
+            { name: "Alex R.", duration: "0:32", status: "ringing" }
+          ].map((call, idx) => (
+            <div key={call.name} className="bg-card/30 p-3 rounded-lg border border-white/10 animate-fade-in" style={{ animationDelay: `${idx * 0.1}s` }}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="w-6 h-6 bg-gradient-primary rounded-full flex items-center justify-center">
+                    <span className="text-xs font-medium text-white">{call.name[0]}</span>
+                  </div>
+                  <span className="text-sm font-medium">{call.name}</span>
                 </div>
-                <span className="text-green-400 text-sm font-medium">{stat.change}</span>
+                <div className="text-right">
+                  <div className="text-xs text-muted-foreground">{call.duration}</div>
+                  <div className={`text-xs capitalize ${
+                    call.status === 'qualifying' ? 'text-accent' :
+                    call.status === 'connected' ? 'text-primary' : 'text-secondary'
+                  }`}>
+                    {call.status}
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="text-2xl font-bold mb-1">{stat.value}</p>
-                <p className="text-muted-foreground text-sm">{stat.label}</p>
-              </div>
-            </Card>
+            </div>
           ))}
         </div>
-
-        {/* Dashboard Layout */}
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Call Distribution Chart */}
-          <Card className="lg:col-span-2 p-6 bg-card/20 backdrop-blur-glass border-white/10 animate-slide-up" style={{animationDelay: '0.4s'}}>
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-semibold">Weekly Call Distribution</h3>
-              <BarChart className="w-5 h-5 text-muted-foreground" />
-            </div>
-            
-            <div className="space-y-4">
-              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, index) => {
-                const height = Math.random() * 60 + 20;
-                return (
-                  <div key={day} className="flex items-center space-x-4">
-                    <span className="text-sm text-muted-foreground w-8">{day}</span>
-                    <div className="flex-1 bg-muted/30 rounded-full h-3">
-                      <div 
-                        className={`h-3 rounded-full bg-gradient-primary transition-all duration-1000 ease-out`}
-                        style={{width: `${height}%`, animationDelay: `${index * 0.1}s`}}
-                      ></div>
-                    </div>
-                    <span className="text-sm font-medium w-8">{Math.floor(height/5)}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </Card>
-
-          {/* Lead Quality Breakdown */}
-          <Card className="p-6 bg-card/20 backdrop-blur-glass border-white/10 animate-slide-up" style={{animationDelay: '0.6s'}}>
-            <h3 className="text-xl font-semibold mb-6">Lead Quality</h3>
-            
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Hot</span>
-                <span className="text-destructive font-medium">24</span>
-              </div>
-              <div className="w-full bg-muted/30 rounded-full h-2">
-                <div className="bg-destructive h-2 rounded-full w-3/4"></div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Warm</span>
-                <span className="text-yellow-500 font-medium">38</span>
-              </div>
-              <div className="w-full bg-muted/30 rounded-full h-2">
-                <div className="bg-yellow-500 h-2 rounded-full w-4/5"></div>
-              </div>
-              
-              <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Cold</span>
-                <span className="text-blue-400 font-medium">12</span>
-              </div>
-              <div className="w-full bg-muted/30 rounded-full h-2">
-                <div className="bg-blue-400 h-2 rounded-full w-1/3"></div>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        {/* Recent Calls Table */}
-        <Card className="mt-8 p-6 bg-card/20 backdrop-blur-glass border-white/10 animate-slide-up" style={{animationDelay: '0.8s'}}>
-          <h3 className="text-xl font-semibold mb-6">Recent Calls</h3>
-          
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/10">
-                  <th className="text-left py-3 text-muted-foreground font-medium">Phone Number</th>
-                  <th className="text-left py-3 text-muted-foreground font-medium">Time</th>
-                  <th className="text-left py-3 text-muted-foreground font-medium">Duration</th>
-                  <th className="text-left py-3 text-muted-foreground font-medium">Status</th>
-                  <th className="text-left py-3 text-muted-foreground font-medium">Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recentCalls.map((call, index) => (
-                  <tr key={index} className="border-b border-white/5 hover:bg-card/10 transition-colors">
-                    <td className="py-4 font-mono text-sm">{call.number}</td>
-                    <td className="py-4 text-muted-foreground">{call.time}</td>
-                    <td className="py-4">{call.duration}</td>
-                    <td className="py-4">
-                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        call.status === 'Qualified' 
-                          ? 'bg-green-500/20 text-green-400' 
-                          : 'bg-red-500/20 text-red-400'
-                      }`}>
-                        {call.status}
-                      </span>
-                    </td>
-                    <td className="py-4 font-semibold">{call.cost}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      )
+    },
+    {
+      id: "leads",
+      title: "Lead Management",
+      icon: Users,
+      content: (
+        <div className="space-y-3 animate-scale-in">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground uppercase tracking-wide">Recent Qualified</span>
+            <div className="text-xs bg-primary/20 text-primary px-2 py-1 rounded-full">64% Conversion</div>
           </div>
-        </Card>
+          
+          {[
+            { name: "Emma Wilson", score: 95, source: "Website" },
+            { name: "Michael Chen", score: 88, source: "Referral" },
+            { name: "Lisa Garcia", score: 76, source: "Social" }
+          ].map((lead, idx) => (
+            <div key={lead.name} className="bg-card/30 p-3 rounded-lg border border-white/10 animate-fade-in" style={{ animationDelay: `${idx * 0.15}s` }}>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm font-medium">{lead.name}</div>
+                  <div className="text-xs text-muted-foreground">{lead.source}</div>
+                </div>
+                <div className="text-right">
+                  <div className={`text-sm font-bold ${
+                    lead.score >= 90 ? 'text-green-400' :
+                    lead.score >= 80 ? 'text-accent' : 'text-primary'
+                  }`}>
+                    {lead.score}%
+                  </div>
+                  <div className="text-xs text-muted-foreground">Score</div>
+                </div>
+              </div>
+              <div className="w-full bg-muted/30 rounded-full h-1 mt-2">
+                <div 
+                  className="bg-gradient-primary h-1 rounded-full transition-all duration-1000" 
+                  style={{ width: `${lead.score}%` }}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )
+    },
+    {
+      id: "analytics",
+      title: "Analytics",
+      icon: BarChart3,
+      content: (
+        <div className="space-y-4 animate-fade-in">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-muted-foreground uppercase tracking-wide">Performance</span>
+            <div className="flex items-center space-x-1">
+              <TrendingUp className="h-3 w-3 text-green-400" />
+              <span className="text-xs text-green-400">+18%</span>
+            </div>
+          </div>
+          
+          <div className="space-y-3">
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-muted-foreground">Answer Rate</span>
+              <span className="text-sm font-bold text-primary">94.5%</span>
+            </div>
+            <div className="w-full bg-muted/30 rounded-full h-2">
+              <div className="bg-gradient-primary h-2 rounded-full w-[94.5%] animate-pulse"></div>
+            </div>
+            
+            <div className="flex justify-between items-center">
+              <span className="text-xs text-muted-foreground">Avg Response</span>
+              <span className="text-sm font-bold text-secondary">1.2s</span>
+            </div>
+            <div className="w-full bg-muted/30 rounded-full h-2">
+              <div className="bg-gradient-secondary h-2 rounded-full w-[85%] animate-pulse"></div>
+            </div>
+            
+            <div className="bg-accent/10 p-2 rounded border border-accent/20">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="h-4 w-4 text-accent" />
+                <div>
+                  <div className="text-xs font-medium text-accent">AI Insight</div>
+                  <div className="text-xs text-muted-foreground">Peak hours: 10 AM - 2 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      setTimeout(() => {
+        setCurrentSection((prev) => (prev + 1) % sections.length);
+        setIsAnimating(false);
+      }, 300);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [sections.length]);
+
+  const currentSectionData = sections[currentSection];
+  const IconComponent = currentSectionData.icon;
+
+  return (
+    <div className="bg-card/20 backdrop-blur-glass border border-white/10 rounded-2xl p-6 shadow-glass relative overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center space-x-3">
+          <div className="p-2 bg-primary/20 rounded-lg">
+            <IconComponent className="h-4 w-4 text-primary" />
+          </div>
+          <h3 className={`text-lg font-semibold transition-all duration-300 ${isAnimating ? 'opacity-0 translate-x-2' : 'opacity-100 translate-x-0'}`}>
+            {currentSectionData.title}
+          </h3>
+        </div>
+        <div className="flex space-x-2">
+          <div className="w-3 h-3 bg-destructive rounded-full"></div>
+          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+        </div>
       </div>
-    </section>
+
+      {/* Navigation dots */}
+      <div className="flex space-x-2 mb-4">
+        {sections.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => {
+              setIsAnimating(true);
+              setTimeout(() => {
+                setCurrentSection(idx);
+                setIsAnimating(false);
+              }, 150);
+            }}
+            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              idx === currentSection 
+                ? 'bg-primary scale-125' 
+                : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+            }`}
+          />
+        ))}
+      </div>
+      
+      {/* Content */}
+      <div className={`transition-all duration-300 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+        {currentSectionData.content}
+      </div>
+
+      {/* Floating elements */}
+      <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full blur-xl animate-glow-pulse"></div>
+      <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-accent/20 rounded-full blur-lg animate-glow-pulse" style={{animationDelay: '1s'}}></div>
+      
+      {/* Progress indicator */}
+      <div className="absolute bottom-2 left-6 right-6">
+        <div className="w-full bg-muted/20 rounded-full h-0.5">
+          <div 
+            className="bg-gradient-primary h-0.5 rounded-full transition-all duration-[4000ms] ease-linear" 
+            style={{ width: isAnimating ? '0%' : '100%' }}
+          ></div>
+        </div>
+      </div>
+    </div>
   );
 };

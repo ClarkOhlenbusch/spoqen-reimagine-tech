@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
+import { DashboardPreview } from "@/components/DashboardPreview";
 
 export const Hero = () => {
   return (
@@ -60,52 +61,9 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - AI Dashboard Preview */}
+          {/* Right Content - Interactive Dashboard Preview */}
           <div className="relative animate-slide-up" style={{animationDelay: '0.3s'}}>
-            <div className="bg-card/20 backdrop-blur-glass border border-white/10 rounded-2xl p-6 shadow-glass">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold">AI Dashboard</h3>
-                <div className="flex space-x-2">
-                  <div className="w-3 h-3 bg-destructive rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                </div>
-              </div>
-              
-              <div className="space-y-4">
-                <div className="bg-card/30 p-4 rounded-lg border border-white/5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">Active Calls</span>
-                    <span className="text-lg font-bold text-primary">12</span>
-                  </div>
-                  <div className="w-full bg-muted/30 rounded-full h-2">
-                    <div className="bg-gradient-primary h-2 rounded-full w-3/4"></div>
-                  </div>
-                </div>
-                
-                <div className="bg-card/30 p-4 rounded-lg border border-white/5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">Leads Qualified</span>
-                    <span className="text-lg font-bold text-accent">89</span>
-                  </div>
-                  <div className="w-full bg-muted/30 rounded-full h-2">
-                    <div className="bg-gradient-secondary h-2 rounded-full w-4/5"></div>
-                  </div>
-                </div>
-                
-                <div className="bg-card/30 p-4 rounded-lg border border-white/5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-muted-foreground">Revenue Impact</span>
-                    <span className="text-lg font-bold text-secondary">$24,680</span>
-                  </div>
-                  <div className="text-xs text-green-400">+15% this month</div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Floating elements */}
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full blur-xl animate-glow-pulse"></div>
-            <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-accent/20 rounded-full blur-lg animate-glow-pulse" style={{animationDelay: '1s'}}></div>
+            <DashboardPreview />
           </div>
         </div>
       </div>
