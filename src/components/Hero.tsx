@@ -32,9 +32,11 @@ export const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="neon" size="xl" className="group">
-                Get Started
-                <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+              <Button variant="neon" size="xl" className="group" asChild>
+                <a href="/dashboard">
+                  Get Started
+                  <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
               <Button variant="glass" size="xl" className="group">
                 <Play className="mr-2" />
