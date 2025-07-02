@@ -1,15 +1,92 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import { RealDashboardPreview } from "@/components/RealDashboardPreview";
 
 export const Hero = () => {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100,
+      });
+    };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-dark relative overflow-hidden">
-      {/* Background Elements */}
+      {/* Interactive Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style={{animationDelay: '1s'}}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/10 rounded-full blur-3xl"></div>
+        {/* Main interactive orb that follows mouse */}
+        <div 
+          className="absolute w-96 h-96 bg-primary/30 rounded-full blur-3xl transition-all duration-700 ease-out"
+          style={{
+            left: `${mousePosition.x * 0.3}%`,
+            top: `${mousePosition.y * 0.3 + scrollY * 0.1}%`,
+            transform: `translate(-50%, -50%) scale(${1 + Math.sin(Date.now() * 0.001) * 0.2})`,
+          }}
+        ></div>
+        
+        {/* Secondary orb with inverse movement */}
+        <div 
+          className="absolute w-80 h-80 bg-secondary/25 rounded-full blur-3xl transition-all duration-1000 ease-out"
+          style={{
+            right: `${(100 - mousePosition.x) * 0.2}%`,
+            bottom: `${(100 - mousePosition.y) * 0.2 + scrollY * 0.05}%`,
+            transform: `translate(50%, 50%) scale(${1 + Math.cos(Date.now() * 0.0015) * 0.15})`,
+          }}
+        ></div>
+        
+        {/* Accent orb with circular motion */}
+        <div 
+          className="absolute w-72 h-72 bg-accent/20 rounded-full blur-3xl transition-all duration-500"
+          style={{
+            left: `${50 + Math.sin(Date.now() * 0.0008 + mousePosition.x * 0.01) * 20}%`,
+            top: `${50 + Math.cos(Date.now() * 0.0008 + mousePosition.y * 0.01) * 20 + scrollY * 0.03}%`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        ></div>
+        
+        {/* Interactive gradient overlay */}
+        <div 
+          className="absolute inset-0 opacity-40 transition-all duration-1000"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, 
+              hsl(315 100% 50% / 0.1) 0%, 
+              hsl(270 100% 60% / 0.05) 30%, 
+              hsl(180 100% 50% / 0.03) 60%, 
+              transparent 100%)`,
+          }}
+        ></div>
+        
+        {/* Floating particles */}
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-primary/40 rounded-full blur-sm animate-float"
+            style={{
+              left: `${20 + i * 10 + Math.sin(Date.now() * 0.001 + i) * 5}%`,
+              top: `${30 + i * 8 + Math.cos(Date.now() * 0.001 + i) * 3 + scrollY * 0.02}%`,
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: `${4 + i * 0.5}s`,
+            }}
+          ></div>
+        ))}
       </div>
 
       <div className="container mx-auto px-6 py-20 relative z-10">
